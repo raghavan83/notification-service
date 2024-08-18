@@ -24,9 +24,9 @@ public class NotificationController {
 	@Autowired
 	private NotificationService notificationService;
 
-	@PostMapping
+	@PostMapping("/send")
 	public ResponseEntity<Notification> makeNotification(@RequestBody Notification notification) {
-		return ResponseEntity.ok(this.notificationService.addNotification(notification));
+		return ResponseEntity.ok(this.notificationService.sendNotification(notification));
 	}
 
 	// Retrieve all notifications

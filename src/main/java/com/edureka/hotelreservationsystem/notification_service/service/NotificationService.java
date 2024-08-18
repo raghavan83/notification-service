@@ -1,5 +1,6 @@
 package com.edureka.hotelreservationsystem.notification_service.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,27 @@ public class NotificationService {
 		return notificationRepository.findById(id).orElse(null);
 	}
 
-	public Notification addNotification(Notification notification) {
-		return notificationRepository.save(notification);
-	}
+	public Notification sendNotification(Notification notification) {
+		// Logic to send notification (email, SMS, etc.)
+        // Example: Sending email, if notificationType is EMAIL
+
+        // Here we would integrate with an email/SMS gateway
+        boolean isSent = sendEmail(notification);
+
+        if (isSent) {
+            notification.setStatus("SENT");
+        } else {
+            notification.setStatus("FAILED");
+        }
+        
+        notification.setSentAt(LocalDateTime.now());
+        return notificationRepository.save(notification);
+    }
+
+    private boolean sendEmail(Notification notification) {
+        // Email sending logic
+        return true; // Simulating a successful email send
+    }
 
 	public Notification updateNotification(Long id, Notification notification) {
 		if (notificationRepository.existsById(id)) {
